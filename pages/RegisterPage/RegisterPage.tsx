@@ -1,14 +1,13 @@
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
-import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { CustomTextInput } from "./components/CustomTextInput";
+import React from "react";
+import { KeyboardType, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "../../style";
 import CustomButton from "./components/CustomButton";
+import { CustomTextInput } from "../../components/CustomTextInput";
 
 interface InputField {
   label: string;
+  type: KeyboardType;
   value: string;
   onChange: (text: string) => void;
 }
@@ -35,27 +34,20 @@ export const RegisterPage: React.FC = () => {
   };
 
   const formattedInputs: InputField[] = [
-    { label: "Insira o nome", value: name, onChange: setName },
-    { label: "Insira o seu endereço", value: street, onChange: setStreet },
-    { label: "Insira o valor por hora", value: price, onChange: setPrice },
+    { label: "Insira o nome", value: name, onChange: setName, type: "default" },
+    {
+      label: "Insira o seu endereço",
+      value: street,
+      onChange: setStreet,
+      type: "default",
+    },
+    {
+      label: "Insira o valor por hora",
+      value: price,
+      onChange: setPrice,
+      type: "numeric",
+    },
   ];
-
-  const MappingInputs: React.FC<{ formattedInputs: InputField[] }> = ({
-    formattedInputs,
-  }) => {
-    return (
-      <>
-        {formattedInputs.map((item) => (
-          <CustomTextInput
-            key={item.label}
-            label={item.label}
-            value={item.value}
-            onChangeText={item.onChange}
-          />
-        ))}
-      </>
-    );
-  };
 
   return (
     <View style={{ gap: 8, padding: 12 }}>
@@ -63,7 +55,15 @@ export const RegisterPage: React.FC = () => {
         Cadastre o seu estacionamento
       </Text>
 
-      <MappingInputs formattedInputs={formattedInputs} />
+      {formattedInputs.map((item) => (
+        <CustomTextInput
+          key={item.label}
+          label={item.label}
+          value={item.value}
+          keyboardType={item.type}
+          onChangeText={item.onChange}
+        />
+      ))}
 
       <Text style={{ fontWeight: "500" }}>Insira uma foto</Text>
       <View
@@ -71,15 +71,15 @@ export const RegisterPage: React.FC = () => {
       >
         <CustomButton
           onPress={pickImage}
-          backgroundColor="button.info"
-          textColor="text.main"
+          backgroundColor={button.info}
+          textColor={text.main}
           text="Tire uma foto"
           iconName="camera"
         />
         <CustomButton
           onPress={pickImage}
-          backgroundColor="brand.secondary"
-          textColor="text.main"
+          backgroundColor={brand.secondary}
+          textColor={text.main}
           text="Armazenamento"
           iconName="wallpaper"
         />
