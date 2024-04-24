@@ -19,8 +19,8 @@ export const BottomTabs = () => {
   };
 
   const mapValues = [
-    { name: "map", size: 24, color: text.contrast, href: "Mapa" },
-    { name: "person", size: 24, color: text.contrast, href: "Cadastro" },
+    { icon: "credit-card", size: 24, color: text.contrast, href: "Credito", name: 'Crédito' },
+    { icon: "person", size: 24, color: text.contrast, href: "Cadastro", name: 'Cadastro' },
   ];
 
   return (
@@ -42,8 +42,8 @@ export const BottomTabs = () => {
                 gap: 8,
               }}
             >
-              <MaterialIcons name={item.name as any} size={32} />
-              <Text>{item.href}</Text>
+              <MaterialIcons name={item.icon as any} size={32} />
+              <Text>{item.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
