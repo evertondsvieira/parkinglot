@@ -1,28 +1,31 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MapView, { Region } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import { CustomMarker } from "./CustomMarker";
 import { useLocationContext } from "../context/Location";
 import { parkingLotData } from "../locations";
+import { calculateDistance } from "../utils/calculateDistance";
 
 export const Map = () => {
-  const { location: GoogleLocation, camera: CameraView } = useLocationContext();
+  const { location: GoogleLocation } = useLocationContext();
+
+  const mapRef = React.createRef<MapView>();
+  const [isOpenModal, setIsOpenModal] = React.useState<boolean>(false);
 
   const [location, setLocation] = React.useState<Region>({
-    latitude: 0,
-    longitude: 0,
+    latitude: -25.457016,
+    longitude: -49.235818,
     longitudeDelta: 0.01,
     latitudeDelta: 0.01,
   });
-  const [errorMsg, setErrorMsg] = React.useState<string>();
 
   React.useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+        console.error("Permission to access location was denied");
         return;
       }
 
@@ -36,21 +39,40 @@ export const Map = () => {
     })();
   }, []);
 
-  const API_KEY = process.env.GOOGLE_API_KEY || "";
+  const distance = calculateDistance(
+    location.latitude,
+    location.longitude,
+    GoogleLocation.latitude,
+    GoogleLocation.longitude
+  );
+
+  const formatDistance = () => {
+    if (distance < 1) {
+      const meters = Math.round(distance * 1000);
+      return `${meters} metros`;
+    }
+    return `${distance.toFixed(2)} km`;
+  };
+
+  React.useEffect(() => {
+    if (GoogleLocation) {
+      const newRegion = {
+        latitude: origin.latitude,
+        longitude: origin.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      };
+      mapRef.current?.animateToRegion(newRegion, 1000);
+    }
+  }, [GoogleLocation]);
+
+  const API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY || "";
 
   const origin = { latitude: location.latitude, longitude: location.longitude };
 
-  React.useEffect(() => {
-    setLocation((prev) => {
-      if (prev !== location) {
-        return location;
-      }
-      return prev;
-    });
-  }, [CameraView]);
-
   return (
     <MapView
+      ref={mapRef}
       style={styles.map}
       customMapStyle={customMapStyle}
       region={location}
