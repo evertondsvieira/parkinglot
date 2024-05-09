@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
+import * as Clipboard from "expo-clipboard";
 import { CreditCardPayment } from "./components/CreditCardPayment";
 import { CurrentBalance } from "./components/CurrentBalance";
 import { PriceSelection } from "./components/PriceSection";
 import { PaymentMethodSelection } from "./components/PaymentMethodSelection";
 import { PixPayment } from "./components/PixPayment";
 import { PurchaseButton } from "./components/PurchaseButton";
+import { useLocationContext } from "../../context/Location";
+import { AlertCopyPix } from "./components/AlertCopyPix";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackList } from "../../@types";
 
 export interface CreditType {
   name: string;
@@ -15,7 +20,10 @@ export interface CreditType {
 }
 
 export const CreditCardPage = () => {
-  const [value, setValue] = useState<number>(0);
+  const navigation = useNavigation<NavigationProp<RootStackList, "Mapa">>();
+
+  const { totalValue, setTotalValue } = useLocationContext();
+  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
   const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
   const [cardInfo, setCardInfo] = useState<CreditType>({
@@ -45,20 +53,31 @@ export const CreditCardPage = () => {
   };
 
   const handlePurchase = () => {
-    //
+    if (selectedPrice !== null) {
+      setTotalValue((prevTotal) => prevTotal + selectedPrice);
+    }
+
+    setTimeout(() => {
+      navigation.navigate("Mapa");
+    }, 3000);
   };
 
   const handleCardInfoChange = (newCardInfo: CreditType) => {
     setCardInfo(newCardInfo);
   };
 
-  const handleCopyPixNumber = () => {
-    //
+  const handleCopyPixNumber = async () => {
+    await Clipboard.setStringAsync(pixNumber);
+    setCopiedToClipboard(true);
+
+    setTimeout(() => {
+      setCopiedToClipboard(false);
+    }, 3000);
   };
 
   return (
     <View style={{ padding: 16, gap: 8 }}>
-      <CurrentBalance balance={value} />
+      <CurrentBalance balance={totalValue} />
       <PriceSelection
         options={priceOptions}
         selectedPrice={selectedPrice}
@@ -85,6 +104,7 @@ export const CreditCardPage = () => {
         />
       )}
       {paymentMethod && <PurchaseButton onPress={handlePurchase} />}
+      {copiedToClipboard && <AlertCopyPix />}
     </View>
   );
 };

@@ -15,6 +15,7 @@ const button = {
 const text = {
   main: "#f3f3f3",
   contrast: "#000000",
+  disabled: "#ababab",
 };
 
 export const styled = {

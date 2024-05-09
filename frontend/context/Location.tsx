@@ -6,6 +6,8 @@ interface ILocationContextTypes {
   setLocation: React.Dispatch<React.SetStateAction<ILocation>>
   camera: Boolean
   setCamera: React.Dispatch<React.SetStateAction<Boolean>>
+  totalValue: number
+  setTotalValue: React.Dispatch<React.SetStateAction<number>>
 }
 
 const LocationContext = React.createContext({} as ILocationContextTypes)
@@ -24,6 +26,8 @@ export const LocationContextProvider = ({ children }: { children: ReactNode }) =
     longitude: 0,
   })
 
+  const [totalValue, setTotalValue] = React.useState<number>(0)
+
   const [camera, setCamera] =  React.useState<Boolean>(false)
 
   const value = {
@@ -31,6 +35,8 @@ export const LocationContextProvider = ({ children }: { children: ReactNode }) =
     setLocation,
     camera,
     setCamera,
+    totalValue,
+    setTotalValue,
   }
 
   return(

@@ -24,7 +24,7 @@ export const PaymentMethodSelection = (props: PaymentMethodSelectionProps) => {
               textAlign: "center",
             }}
           >
-            { method }
+           { method }
           </Text>
         </TouchableOpacity>
       ))}
