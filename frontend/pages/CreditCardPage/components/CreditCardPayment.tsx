@@ -26,9 +26,9 @@ export const CreditCardPayment = (props: CreditCardPaymentProps) => {
 
   return (
     <View style={{ gap: 8 }}>
-      {fields.map((field, index) => (
+      {fields.map((field) => (
         <CustomTextInput
-          key={index}
+          key={field.label}
           label={field.label}
           value={field.value}
           onChangeText={field.onChange}
