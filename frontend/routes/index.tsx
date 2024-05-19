@@ -18,7 +18,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      <StatusBar style="light" />
+      <StatusBar style="light" backgroundColor={brand.main} />
       <Stack.Navigator
         initialRouteName="Login"
         screenOptions={{
