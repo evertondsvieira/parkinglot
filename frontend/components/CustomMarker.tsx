@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 import { Callout, Marker } from "react-native-maps";
-import { useLocationContext } from "../context/Location";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { styled } from "../style";
 
@@ -12,28 +11,21 @@ type ILocation = {
   longitudeDelta: number;
 };
 
-interface CustomMarkerProps {
+export interface CustomMarkerProps {
   id: number;
   location: ILocation;
   message?: string;
   price: number;
   image: string;
+  onSelectMarker: () => void
 }
 
 export const CustomMarker = React.memo((props: CustomMarkerProps) => {
-  const { id, location, price, message, image } = props;
+  const { id, location, price, message, image, onSelectMarker } = props;
 
   const { marker, text } = styled
 
-  const { setLocation, setCamera } = useLocationContext();
-
   const markerRef = React.useRef<any>(null);
-
-  const toggleRoute = async () => {
-    setLocation({ latitude: location.latitude, longitude: location.longitude });
-    markerRef.current?.hideCallout();
-    setCamera((prev) => !prev);
-  };
 
   return (
     <Marker
@@ -82,30 +74,25 @@ export const CustomMarker = React.memo((props: CustomMarkerProps) => {
         ></View>
       </View>
       <Callout
-        onPress={toggleRoute}
-        style={{ height: 150, width: 160, paddingTop: 8 }}
+        onPress={onSelectMarker}
+        style={{ height: 150, width: 160 }}
       >
         <Text
           style={{
-            width: 150,
+            width: 160,
             height: 144,
             marginTop: -94,
-            paddingTop: 8,
-            marginLeft: 4,
-            marginRight: 4,
             flex: 1,
           }}
         >
           <Image
             resizeMode={"cover"}
-            style={{ width: 150, height: 150 }}
+            style={{ width: 160, height: 150 }}
             source={{ uri: image }}
           />
         </Text>
-        <View>
-          <Text style={styles.title}>{message}</Text>
-          <Text style={{ color: "red" }}>Iniciar rota</Text>
-        </View>
+        <Text style={styles.title}>{message}</Text>
+        <Text>Iniciar rota</Text>
       </Callout>
     </Marker>
   );
