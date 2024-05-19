@@ -8,7 +8,7 @@ const marker = {
 };
 
 const button = {
-  info: "#2D93AD",
+  info: "#007bff",
   success: "#26ac38",
 };
 
