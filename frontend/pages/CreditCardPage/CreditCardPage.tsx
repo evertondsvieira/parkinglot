@@ -8,9 +8,9 @@ import { PaymentMethodSelection } from "./components/PaymentMethodSelection";
 import { PixPayment } from "./components/PixPayment";
 import { PurchaseButton } from "./components/PurchaseButton";
 import { useLocationContext } from "../../context/Location";
-import { AlertCopyPix } from "./components/AlertCopyPix";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackList } from "../../@types";
+import { toastMessage } from "../../utils/toastMessage";
 
 export interface CreditType {
   name: string;
@@ -19,7 +19,7 @@ export interface CreditType {
   cvv: string;
 }
 
-export const CreditCardPage = () => {
+export const CreditCardPage: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackList, "Mapa">>();
 
   const { totalValue, setTotalValue } = useLocationContext();
@@ -58,8 +58,9 @@ export const CreditCardPage = () => {
     }
 
     setTimeout(() => {
+      toastMessage({ title: "Crédito adicionado na carteira com sucesso", type: "success" })
       navigation.navigate("Mapa");
-    }, 3000);
+    }, 1000);
   };
 
   const handleCardInfoChange = (newCardInfo: CreditType) => {
@@ -69,10 +70,7 @@ export const CreditCardPage = () => {
   const handleCopyPixNumber = async () => {
     await Clipboard.setStringAsync(pixNumber);
     setCopiedToClipboard(true);
-
-    setTimeout(() => {
-      setCopiedToClipboard(false);
-    }, 3000);
+    toastMessage({ title: "Pix copiado para a área de transferência", type: "success" })
   };
 
   return (
@@ -104,7 +102,6 @@ export const CreditCardPage = () => {
         />
       )}
       {paymentMethod && <PurchaseButton onPress={handlePurchase} />}
-      {copiedToClipboard && <AlertCopyPix />}
     </View>
   );
 };
