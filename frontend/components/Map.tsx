@@ -11,6 +11,7 @@ import { Dialog } from "./Dialog";
 import useStartRoute from "../hooks/useStartRoute";
 import { ILocation } from "../@types";
 import { toastMessage } from "../utils/toastMessage";
+import { PROVIDER_GOOGLE } from "react-native-maps";
 
 export const Map = () => {
   const { location: GoogleLocation, setTotalValue, totalValue } = useLocationContext();
@@ -105,6 +106,7 @@ export const Map = () => {
     ) : (
       <>
         <MapView
+          provider={PROVIDER_GOOGLE}
           ref={mapRef}
           style={styles.map}
           customMapStyle={customMapStyle}
