@@ -12,7 +12,7 @@ export const PriceSelection = (props: PriceSelectionProps) => {
 
   return (
     <View style={{ gap: 8 }}>
-      <Text style={{ fontWeight: "500" }}>Quantos créditos comprar?</Text>
+      <Text style={{ fontWeight: "500" }}>Quantos créditos deseja comprar?</Text>
       <View style={{ flexDirection: "row", gap: 8 }}>
         {options.map((price) => (
           <TouchableOpacity key={price} onPress={() => onSelect(price)}>

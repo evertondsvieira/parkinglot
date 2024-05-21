@@ -74,34 +74,43 @@ export const CreditCardPage: React.FC = () => {
   };
 
   return (
-    <View style={{ padding: 16, gap: 8 }}>
-      <CurrentBalance balance={totalValue} />
-      <PriceSelection
-        options={priceOptions}
-        selectedPrice={selectedPrice}
-        onSelect={handlePriceSelect}
-      />
-      {selectedPrice && (
-        <PaymentMethodSelection
-          methods={["Pix", "Cartão de crédito"]}
-          selectedMethod={paymentMethod}
-          onSelect={handlePaymentMethodSelect}
+    <View style={{ display: "flex", height: "100%", justifyContent: "space-between" }}>
+      <View style={{ padding: 16, gap: 8 }}>
+        <CurrentBalance balance={totalValue} />
+        <PriceSelection
+          options={priceOptions}
+          selectedPrice={selectedPrice}
+          onSelect={handlePriceSelect}
         />
+        {selectedPrice && (
+          <PaymentMethodSelection
+            methods={["Pix", "Cartão de crédito"]}
+            selectedMethod={paymentMethod}
+            onSelect={handlePaymentMethodSelect}
+          />
+        )}
+        {paymentMethod === "Pix" && (
+          <PixPayment
+            pixNumber={pixNumber}
+            qrCodeUrl={randomQRCode}
+            copyPixNumber={handleCopyPixNumber}
+          />
+        )}
+        {paymentMethod === "Cartão de crédito" && (
+          <CreditCardPayment
+            cardInfo={cardInfo}
+            onChange={handleCardInfoChange}
+          />
+        )}
+      </View>
+      {paymentMethod && (
+        <View style={{ padding: 16, gap: 8 }}>
+          <PurchaseButton 
+            selectedMethod={paymentMethod}
+            onPress={handlePurchase} 
+          />
+        </View>
       )}
-      {paymentMethod === "Pix" && (
-        <PixPayment
-          pixNumber={pixNumber}
-          qrCodeUrl={randomQRCode}
-          copyPixNumber={handleCopyPixNumber}
-        />
-      )}
-      {paymentMethod === "Cartão de crédito" && (
-        <CreditCardPayment
-          cardInfo={cardInfo}
-          onChange={handleCardInfoChange}
-        />
-      )}
-      {paymentMethod && <PurchaseButton onPress={handlePurchase} />}
     </View>
   );
 };

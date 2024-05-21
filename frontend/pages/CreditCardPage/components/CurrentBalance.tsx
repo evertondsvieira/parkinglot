@@ -1,19 +1,19 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 interface CurrentBalanceProps {
-  balance: number
+  balance: number;
 }
 
 export const CurrentBalance = (props: CurrentBalanceProps) => {
-  const { balance } = props
+  const { balance } = props;
 
   return (
-    <Text style={{ fontWeight: "500" }}>
-      Saldo atual:{" "}
-      <Text style={{ fontWeight: "400" }}>
-        {balance.toLocaleString("pt-BR", { style: "decimal" })}
+    <View>
+      <Text style={{ fontWeight: "500" }}>Saldo atual</Text>
+      <Text style={{ fontWeight: "700", fontSize: 18 }}>
+        {`$ ${balance.toLocaleString("pt-BR", { style: "decimal" })}`}
       </Text>
-    </Text>
+    </View>
   );
 };
