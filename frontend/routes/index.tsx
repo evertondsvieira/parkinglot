@@ -8,6 +8,7 @@ import { SearchPage } from "../pages/SearchPage/SearchPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { CreditCardPage } from "../pages/CreditCardPage/CreditCardPage";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
+import { AccountPage } from "../pages/AccountPage/AccountPage";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ const Routes = () => {
         <Stack.Screen name="Pesquisa" component={SearchPage} />
         <Stack.Screen name="Cadastro" component={RegisterPage} />
         <Stack.Screen name="Credito" component={CreditCardPage} />
+        <Stack.Screen name="Conta" component={AccountPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -20,6 +20,8 @@ export const BottomTabs = () => {
 
   const mapValues = [
     { icon: "credit-card", size: 24, color: text.contrast, href: "Credito", name: 'Carteira' },
+    { icon: "person", size: 24, color: text.contrast, href: "Conta", name: 'Conta' },
+    { icon: "logout", size: 24, color: text.contrast, href: "Mapa", name: 'Sair' },
   ];
 
   return (
