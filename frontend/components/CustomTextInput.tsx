@@ -13,7 +13,7 @@ export const CustomTextInput = (props: InputProps) => {
   const { label, value, onChangeText, keyboardType, placeholder } = props;
 
   return (
-    <View>
+    <View style={{ width: "100%" }}>
       <Text style={{ fontWeight: "500" }}>{label}</Text>
       <TextInput
         placeholder={placeholder}
