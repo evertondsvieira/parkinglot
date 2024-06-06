@@ -9,6 +9,7 @@ import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { CreditCardPage } from "../pages/CreditCardPage/CreditCardPage";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { AccountPage } from "../pages/AccountPage/AccountPage";
+import { RegisterUserPage } from "../pages/RegisterUserPage/RegisterUserPage";
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ const Routes = () => {
         <Stack.Screen name="Cadastro" component={RegisterPage} />
         <Stack.Screen name="Credito" component={CreditCardPage} />
         <Stack.Screen name="Conta" component={AccountPage} />
+        <Stack.Screen name="Registro" component={RegisterUserPage} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
