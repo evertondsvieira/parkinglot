@@ -9,6 +9,10 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@firebase/analytics": "^0.10.4",
+    "@firebase/app": "^0.10.4",
+    "@firebase/firestore": "^4.6.3",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
     "constants": "^0.0.2",
@@ -20,6 +24,7 @@
     "expo-location": "~16.5.5",
     "expo-navigation-bar": "~2.8.1",
     "expo-status-bar": "~1.11.1",
+    "firebase": "^10.12.1",
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-dotenv": "^3.4.11",
