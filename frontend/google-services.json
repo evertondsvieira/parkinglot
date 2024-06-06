@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1077921523800",
+    "project_id": "parkinglot-9400a",
+    "storage_bucket": "parkinglot-9400a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077921523800:android:dc766a6ac433d3ba14022d",
+        "android_client_info": {
+          "package_name": "com.evertonvieira.parkinglot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZdLeC0RzGeP8UXJ9Kb8ii07606em7Q4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
