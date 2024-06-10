@@ -6,6 +6,14 @@ import { RootStackList } from "../@types";
 import { Feather } from "@expo/vector-icons";
 import { styled } from "../style";
 
+interface IMapValues {
+  icon: string
+  size: number
+  color: string
+  href: string
+  name: string
+}
+
 export const BottomTabs = () => {
   const navigation = useNavigation<NavigationProp<RootStackList, 'Mapa' | 'Pesquisa'>>();
 
@@ -18,10 +26,10 @@ export const BottomTabs = () => {
     setOpen(false);
   };
 
-  const mapValues = [
+  const mapValues: IMapValues[] = [
     { icon: "credit-card", size: 24, color: text.contrast, href: "Credito", name: 'Carteira' },
     { icon: "person", size: 24, color: text.contrast, href: "Conta", name: 'Conta' },
-    { icon: "logout", size: 24, color: text.contrast, href: "Mapa", name: 'Sair' },
+    { icon: "logout", size: 24, color: text.contrast, href: "Login", name: 'Sair' },
   ];
 
   return (

@@ -1,13 +1,13 @@
 import { View, StyleSheet } from "react-native";
-import { Map } from "../../components/Map";
+import { Map as ExpoMap } from "../../components/Map";
 import { BottomTabs } from "../../components/BottomTabs";
 import { SearchBar } from "../../components/SeachBar";
 
-export const MapPage: React.FC = () => {
+export const Map: React.FC = () => {
   return (
     <View style={styles.container}>
       <SearchBar />
-      <Map />
+      <ExpoMap />
       <BottomTabs />
     </View>
   );

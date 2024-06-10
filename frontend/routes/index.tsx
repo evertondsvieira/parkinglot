@@ -1,14 +1,16 @@
 import * as NavigationBar from "expo-navigation-bar";
+
 import { styled } from "../style";
 import { StatusBar } from "expo-status-bar";
-import { MapPage } from "../pages/MapPage/MapPage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SearchPage } from "../pages/SearchPage/SearchPage";
-import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
-import { CreditCardPage } from "../pages/CreditCardPage/CreditCardPage";
-import { LoginPage } from "../pages/LoginPage/LoginPage";
-import { AccountPage } from "../pages/AccountPage/AccountPage";
+
+import { Map } from "../modules/Map/Map";
+import { Search } from "../modules/Search/Search";
+import { Register } from "../modules/Register/Register";
+import { CreditCard } from "../modules/Credit/CreditCard";
+import { Account } from "../modules/Account/Account";
+import { Login } from "../modules/Login/Login";
 
 const Stack = createStackNavigator();
 
@@ -29,14 +31,14 @@ const Routes = () => {
       >
         <Stack.Screen
           name="Mapa"
-          component={MapPage}
+          component={Map}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }} />
-        <Stack.Screen name="Pesquisa" component={SearchPage} />
-        <Stack.Screen name="Cadastro" component={RegisterPage} />
-        <Stack.Screen name="Credito" component={CreditCardPage} />
-        <Stack.Screen name="Conta" component={AccountPage} />
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name="Pesquisa" component={Search} />
+        <Stack.Screen name="Credito" component={CreditCard} />
+        <Stack.Screen name="Conta" component={Account} />
+        <Stack.Screen name="Registro" component={Register} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
