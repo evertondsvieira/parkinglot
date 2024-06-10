@@ -1,17 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { CustomTextInput } from "../../../components/CustomTextInput";
-
-interface CardInfo {
-  name: string;
-  cardNumber: string;
-  expiryDate: string;
-  cvv: string;
-}
+import { CreditType } from "../../../models/Credit";
 
 interface CreditCardPaymentProps {
-  cardInfo: CardInfo;
-  onChange: (newCardInfo: CardInfo) => void;
+  cardInfo: CreditType;
+  onChange: (newCardInfo: CreditType) => void;
 }
 
 export const CreditCardPayment = (props: CreditCardPaymentProps) => {

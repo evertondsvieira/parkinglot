@@ -7,39 +7,67 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import { styled } from "../../style";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackList } from "../../@types";
-import { FIREBASE_AUTH, FIRESTORE_DB } from "../../firebaseConfig";
+import { getStoreData, storeUserData } from "../../utils/StoreData";
+import { formatPhone, formatCPF } from "../../utils/format";
+import { toastMessage } from "../../utils/toastMessage";
+import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { IAccountForm, ISelectedVehicle, ITextField } from "../../models/Account";
 
-export const AccountPage: React.FC = () => {
-  const { button, brand } = styled;
-  const { width } = Dimensions.get("window");
-  const auth = FIREBASE_AUTH;
-  const firestore = FIRESTORE_DB;
+export const Account: React.FC = () => {
+  const { button, brand } = styled
 
-  const [selectedVehicle, setSelectedVehicle] = useState<"car" | "motorcycle" | null>(null);
-
-  const [formData, setFormData] = useState({
-    fullName: "demo",
+  const { width } = Dimensions.get("window")
+  
+  const displayName = FIREBASE_AUTH.currentUser?.displayName
+  const [selectedVehicle, setSelectedVehicle] = useState<ISelectedVehicle>(null)
+  const [formData, setFormData] = useState<IAccountForm>({
+    fullName: "",
     phone: "",
     vehiclePlate: "",
     cpf: "",
-  });
+    model: ""
+  })
 
-  const navigation = useNavigation<NavigationProp<RootStackList, "Mapa">>();
-  
-  const toggleLocation = () => {
-    navigation.navigate("Mapa");
-  };
+  const navigation = useNavigation<NavigationProp<RootStackList, "Mapa">>()
+
+  const loadData = async () => {
+    try {
+      const userData = await getStoreData()
+      if (userData) {
+        setFormData(userData)
+        setSelectedVehicle(userData.selectedVehicle)
+      }
+    } catch (error) {
+      console.error("Error loading data:", error)
+    }
+  }
 
   const handleChange = (name: string, value: string) => {
-    setFormData({ ...formData, [name]: value });
-  };
+    setFormData({ ...formData, [name]: value })
+  }
 
-  const fields = [
-    { label: "Nome Completo", placeholder: "Digite seu nome completo", value: formData.fullName, name: "fullName" },
-    { label: "Telefone", placeholder: "Digite seu telefone", value: formData.phone, name: "phone" },
+  const saveData = async () => {
+    try {
+      const dataToSave = { ...formData, selectedVehicle }
+      await storeUserData(dataToSave)
+      toastMessage({ title: "Informações atualizadas com sucesso", type: "success" })
+      navigation.navigate("Mapa")
+    } catch (error) {
+      console.error("Error saving data:", error)
+    }
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  const fields: ITextField[] = [
+    { label: "Nome Completo", placeholder: "Digite seu nome completo", value: displayName ?? formData.fullName, name: "fullName" },
+    { label: "Telefone", placeholder: "Digite seu telefone", value: formatPhone(formData.phone), name: "phone" },
+    { label: "Modelo", placeholder: "Digite o modelo do carro", value: formData.model, name: "model" },
     { label: "Placa do Veículo", placeholder: "Digite a placa do veículo", value: formData.vehiclePlate, name: "vehiclePlate" },
-    { label: "CPF", placeholder: "Digite seu CPF", value: formData.cpf, name: "cpf" }
-  ];
+    { label: "CPF", placeholder: "Digite seu CPF", value: formatCPF(formData.cpf), name: "cpf" }
+  ]
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "space-between", margin: 12 }}>
@@ -53,7 +81,6 @@ export const AccountPage: React.FC = () => {
             value={field.value}
           />
         ))}
-
         <View style={{ margin: 12, flexDirection: "row", justifyContent: "center" }}>
           <TouchableOpacity
             onPress={() => setSelectedVehicle("car")}
@@ -85,9 +112,8 @@ export const AccountPage: React.FC = () => {
           </TouchableOpacity>
         </View>
       </View>
-
       <TouchableOpacity
-        onPress={toggleLocation}
+        onPress={saveData}
         style={{
           backgroundColor: button.success,
           padding: 12,
@@ -99,5 +125,5 @@ export const AccountPage: React.FC = () => {
         <Text style={{ color: "white" }}>Salvar Alterações</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}

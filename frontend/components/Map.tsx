@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { ActivityIndicator, StyleSheet,} from "react-native";
 import MapView, { Region } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
@@ -19,8 +19,8 @@ export const Map = () => {
   const mapRef = React.createRef<MapView>();
 
   const [location, setLocation] = React.useState<Region>({
-    latitude: -25.457016,
-    longitude: -49.235818,
+    latitude: 0,
+    longitude: 0,
     longitudeDelta: 0.01,
     latitudeDelta: 0.01,
   });
@@ -49,14 +49,6 @@ export const Map = () => {
     GoogleLocation.latitude,
     GoogleLocation.longitude
   );
-
-  const formatDistance = () => {
-    if (distance < 1) {
-      const meters = Math.round(distance * 1000);
-      return `${meters} metros`;
-    }
-    return `${distance.toFixed(2)} km`;
-  };
 
   React.useEffect(() => {
     if (GoogleLocation) {

@@ -6,20 +6,7 @@ import {
   GooglePlaceDetail,
   GooglePlacesAutocomplete,
 } from "react-native-google-places-autocomplete";
-
-interface Location {
-  latitude: number;
-  longitude: number;
-}
-
-interface GooglePlacesDetails {
-  geometry: {
-    location: {
-      lat: number;
-      lng: number;
-    };
-  };
-}
+import { IGooglePlacesDetails, ILocation } from "../models/Search";
 
 export const GoogleSelect = () => {
   const API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
@@ -29,12 +16,12 @@ export const GoogleSelect = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackList, "Pesquisa" | "Mapa">>();
 
-  const formatLocation = (details: GooglePlacesDetails): Location => ({
+  const formatLocation = (details: IGooglePlacesDetails): ILocation => ({
     latitude: details.geometry.location.lat,
     longitude: details.geometry.location.lng,
   });
 
-  const toggleLocation = (location: Location) => {
+  const toggleLocation = (location: ILocation) => {
     navigation.navigate("Mapa");
     setLocation(location);
   };

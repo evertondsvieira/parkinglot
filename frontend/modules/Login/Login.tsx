@@ -14,7 +14,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { toastMessage } from "../../utils/toastMessage";
 
-export const LoginPage = () => {
+export const Login: React.FC = () => {
   const { brand } = styled;
 
   const navigation =
@@ -26,9 +26,7 @@ export const LoginPage = () => {
 
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Login bem-sucedido:", user);
+      .then(() => {
         navigation.navigate("Mapa");
       })
       .catch((error) => {
@@ -44,7 +42,7 @@ export const LoginPage = () => {
   return (
     <View style={[styles.container, { backgroundColor: brand.main }]}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Image style={styles.logo} source={require("../../assets/logo1.png")} />
+        <Image style={styles.logo} source={require("../../assets/logo.png")} />
         <TextInput
           style={styles.input}
           placeholder="E-mail"

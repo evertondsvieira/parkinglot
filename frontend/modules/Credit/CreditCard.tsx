@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { CreditCardPayment } from "./components/CreditCardPayment";
 import { CurrentBalance } from "./components/CurrentBalance";
@@ -11,31 +11,24 @@ import { useLocationContext } from "../../context/Location";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackList } from "../../@types";
 import { toastMessage } from "../../utils/toastMessage";
+import { CreditType } from "../../models/Credit";
 
-export interface CreditType {
-  name: string;
-  cardNumber: string;
-  expiryDate: string;
-  cvv: string;
-}
-
-export const CreditCardPage: React.FC = () => {
+export const CreditCard: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackList, "Mapa">>();
 
   const { totalValue, setTotalValue } = useLocationContext();
-  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
-  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
-  const [cardInfo, setCardInfo] = useState<CreditType>({
+  const [copiedToClipboard, setCopiedToClipboard] = React.useState<boolean>(false);
+  const [selectedPrice, setSelectedPrice] = React.useState<number | null>(null);
+  const [paymentMethod, setPaymentMethod] = React.useState<string | null>(null);
+  const [cardInfo, setCardInfo] = React.useState<CreditType>({
     name: "",
     cardNumber: "",
     expiryDate: "",
     cvv: "",
   });
-  const [pixNumber, setPixNumber] = useState<string>("");
-  const [randomQRCode, setRandomQRCode] = useState<string>("");
-
-  const priceOptions = [10, 20, 30, 50, 100];
+  const [pixNumber, setPixNumber] = React.useState<string>("");
+  const [randomQRCode, setRandomQRCode] = React.useState<string>("");
+  const priceOptions: number[] = [10, 20, 30, 50, 100];
 
   const handlePriceSelect = (price: number) => {
     setSelectedPrice(price === selectedPrice ? null : price);

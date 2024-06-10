@@ -8,15 +8,16 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackList } from "../../@types";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { toastMessage } from "../../utils/toastMessage";
+import { IFormatUserData } from "../../models/Register";
 
-export const RegisterUserPage: React.FC = () => {
+export const Register: React.FC = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [name, setName] = React.useState<string>("");
 
   const navigation = useNavigation<NavigationProp<RootStackList, "Login">>();
 
-  const formatUserData = [
+  const formatUserData: IFormatUserData[] = [
     {
       placeholder: "Digite o seu nome completo",
       onChange: setName,
@@ -93,7 +94,7 @@ export const RegisterUserPage: React.FC = () => {
         <Image
           style={styles.logo}
           alt="logo"
-          source={require("../../assets/logo1.png")}
+          source={require("../../assets/logo.png")}
         />
         <View>
           {formatUserData.map((item, index) => (

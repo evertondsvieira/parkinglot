@@ -24,7 +24,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyApAwuAbKXQMm9FIBM1ComSW9mg7y34XAQ"
+          "apiKey": "Super API Key"
         }
       },
       "permissions": [
@@ -60,7 +60,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "f319d8c7-64ae-46ad-a3b4-3d315ad0dd6e"
+        "projectId": "Super Project Id"
       }
     }
   }
